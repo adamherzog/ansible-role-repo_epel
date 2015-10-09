@@ -1,0 +1,13 @@
+---
+- name: check if epel yum repository is installed
+  command: rpm -q epel-release
+  register: epel_installed
+  ignore_errors: true
+  failed_when: false
+  changed_when: false
+
+- name: install epel yum repository
+  yum:
+    name: http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    state: present
+  when: epel_installed|failed
